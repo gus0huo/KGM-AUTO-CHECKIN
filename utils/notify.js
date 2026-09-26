@@ -122,7 +122,33 @@ async function sendPushPlus(title, content, token, topic) {
 }
 
 // 7. Telegram Bot
+async function 
+ // 7. Telegram Bot
 async function sendTelegram(title, content, botToken, chatId) {
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: `*${title}*\n\n${content}`,
+      parse_mode: 'Markdown',
+    }),
+    signal: AbortSignal.timeout(20000),
+  })
+
+  // 读取 Telegram 返回的具体错误信息
+  const data = await resp.json().catch(() => null)
+
+  if (!resp.ok || !data?.ok) {
+    const description = data?.description || `HTTP ${resp.status}`
+    printRed(`Telegram API 错误: ${description}`)
+    return false
+  }
+
+  return true
+}(title, content, botToken, chatId) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`
   const resp = await fetch(url, {
     method: 'POST',
