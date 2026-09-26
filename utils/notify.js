@@ -121,8 +121,6 @@ async function sendPushPlus(title, content, token, topic) {
   return resp.ok
 }
 
-// 7. Telegram Bot
-async function 
  // 7. Telegram Bot
 async function sendTelegram(title, content, botToken, chatId) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`
@@ -148,18 +146,6 @@ async function sendTelegram(title, content, botToken, chatId) {
   }
 
   return true
-}(title, content, botToken, chatId) {
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`
-  const resp = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: `*${title}*\n\n${content}`,
-      parse_mode: 'Markdown',
-    }),
-  })
-  return resp.ok
 }
 
 // 8. Bark (iOS 推送)
